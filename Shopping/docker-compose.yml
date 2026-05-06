@@ -1,17 +1,33 @@
-version: '3.4'
-
 services:
   shopping.api:
-    image: ${DOCKER_REGISTRY-}shoppingapi
+    image: shoppingapi
+    container_name: shopping.api
     build:
       context: .
       dockerfile: Shopping.API/Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - shopping.db
 
   shopping.client:
-    image: ${DOCKER_REGISTRY-}shoppingclient
+    image: shoppingclient
+    container_name: shopping.client
     build:
       context: .
       dockerfile: Shopping.Client/Dockerfile
+    ports:
+      - "5001:8080"
+    depends_on:
+      - shopping.api
 
   shopping.db:
     image: mongo
+    container_name: shopping.db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

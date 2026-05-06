@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: shoppingapi-configmap
 data:
+  connection_string: mongodb://username:password@mongo-service:27017/CatalogDb?authSource=admin
   shoppingapi_url: http://shoppingapi-service:8000
